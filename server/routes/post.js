@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const postController = require("../controllers/postController");
+const upload = require('../helpers/googleUpload');
 
 //get all posts data
 router.get("/", postController.findAll);
@@ -16,7 +17,8 @@ router.delete("/:id", postController.delete)
 //register new post
 router.post("/", postController.create);
 
-//login a post
-router.post("/login", postController.login);
+//generate tags
+router.post("/tags", upload.multer('image'), upload.sendUploadToGCS, /** generateTokenMiddleWare*/ postController.generateTags);
+
 
 module.exports = router;
