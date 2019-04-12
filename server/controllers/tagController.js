@@ -1,5 +1,4 @@
 const TagModel = require('../models/tag')
-
 const vision = require('@google-cloud/vision');
 
 // Creates a client
