@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const postController = require("../controllers/postController");
 const tagController = require('../controllers/tagController')
-const upload = require('../helpers/googleUpload');
+// const upload = require('../helpers/googleUpload');
 
 //get all posts data
 // router.get("/", postController.findAll);

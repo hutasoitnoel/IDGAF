@@ -11,28 +11,30 @@ const client = new vision.ImageAnnotatorClient({
 
 module.exports = {
 
-  create(req, res, next) {
-    // console.log(req.file)
-    client
-      .labelDetection(req.file.cloudStoragePublicUrl)
-      .then(results => {
-        const labels = results[0].labelAnnotations;
-        let tagPromiseAll = []
-        labels.forEach(name => {
-          tagPromiseAll.push(TagModel.create({tagName: name.description}))
-        })
+  async create(req, res, next) {
+    console.log(typeof req.filePath, req.filePath, 'ini req file pathhhhhh')
+    try {
+      let results = await client
+        .labelDetection(req.filePath)
+      const labels = results[0].labelAnnotations;
+      let tagPromiseAll = []
+      labels.forEach(name => {
+        tagPromiseAll.push(TagModel.create({ tagName: name.description }))
+      })
 
-        return Promise.all(tagPromiseAll)
-      })
-      .then(tags => {
-        console.log(tags)
-        res.status(201).json(tags)
-      })
-      .catch(err => {
-        console.error('ERROR:', err);
-        res.status(500).json(err)
-      })
-  },
+      let tags = await Promise.all(tagPromiseAll)
+      console.log(tags)
+      res.status(201).json(tags)
+    } catch (err) {
+      console.log(err, 'ininni====================')
+    }
+  }
+  // })
+  // .catch(err => {
+  // console.error('ERROR:', err);
+  // res.status(500).json(err)
+  // })
+  // },
 
   // findTag(req, res) {
   //   // console.log(req.query.q)
@@ -42,7 +44,7 @@ module.exports = {
   //         tagName: req.query.q
   //       })
   //       .then()
-      
+
   //   } else {
   //     console.log('masuk else')
   //   }
