@@ -1,6 +1,6 @@
 const color = require('colors')
 const User = require('../models/user')
-const Todo = require('../models/todo')
+const Post = require('../models/post')
 const jwt = require('jsonwebtoken')
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
 
     authorization: function (req, res, next) {
         console.log('authorizing...'.red)
-        Todo
+        Post
             .findById(req.params.id)
             .then(found => {
                 // console.log(found, 'ini found==========')
