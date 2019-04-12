@@ -1,5 +1,4 @@
 const TagModel = require('../models/tag')
-
 const vision = require('@google-cloud/vision');
 
 // Creates a client
@@ -21,30 +20,34 @@ module.exports = {
         labels.forEach(name => {
           tagPromiseAll.push(TagModel.create({tagName: name.description}))
         })
-
+        // console.log(tagPromiseAll);
         return Promise.all(tagPromiseAll)
       })
       .then(tags => {
-        console.log(tags)
-        res.status(201).json(tags)
+        // console.log('>>>>', tags);
+        // res.status(201).json(tags)
+        req.file.tags = tags;
+        next();
       })
       .catch(err => {
         console.error('ERROR:', err);
-        res.status(500).json(err)
+        // res.status(500).json(err)
+        next();
+
       })
   },
 
-  // findTag(req, res) {
-  //   // console.log(req.query.q)
-  //   if (req.query.q) {
-  //     TagModel
-  //       .find({
-  //         tagName: req.query.q
-  //       })
-  //       .then()
+  findTag(req, res) {
+    // console.log(req.query.q)
+    if (req.query.q) {
+      TagModel
+        .find({
+          tagName: req.query.q
+        })
+        .then()
       
-  //   } else {
-  //     console.log('masuk else')
-  //   }
-  // }
+    } else {
+      console.log('masuk else')
+    }
+  }
 }
