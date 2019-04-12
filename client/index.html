@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,4 +12,140 @@
 
   <script src="script.js"></script>
 </body>
+=======
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta property="og:url" content="https://www.your-domain.com/your-page.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Your Website Title" />
+    <meta property="og:description" content="Your description" />
+    <meta property="og:image" content="https://www.your-domain.com/path/image.jpg" />
+
+    <!-- [bootstrap] -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- [aos] -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- [icons] -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!-- [J Query] -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+    <!-- [IZI MODAL] -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/css/iziModal.css">
+
+    <!-- [jQuery] -->
+    <script src="https://code.jquery.com/jquery-2.2.4.js"
+        integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+
+    <!-- [ICONS] -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!-- [Axios] -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+    <!-- [Tag Manager] -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@voerro/vue-tagsinput@1.11.2/dist/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@voerro/vue-tagsinput@1.8.0/dist/voerro-vue-tagsinput.js"></script>
+
+
+
+    <link rel="stylesheet" href="style.css">
+
+    <title>Document</title>
+
+</head>
+
+<body>
+
+    <div id="fb-root"></div>
+
+
+    <div id="app">
+
+        <div class="mx-auto">
+            <h4 class="text-dark hastag" 
+                v-if="showSearch">{{ searchOnScreen }}
+            >
+            </h4>
+        </div>
+
+        <navbar-template 
+            @move="move"
+            @submit="submitSearch"
+        >
+        </navbar-template>
+
+        <list-post v-if="position === 'list-post'">
+        </list-post>
+
+        <searched-post
+            v-if="position === 'searched-post'"
+            :search-on-screen="searchOnScreen"
+            :show-search="showSearch"
+        >
+        </searched-post> 
+
+        <add-post-form v-if="position === 'add-post'">
+        </add-post-form>
+
+    </div>
+
+    <div id="modal-alert"></div>
+
+    <!-- ──────────────────────────[IMAGE INPUT]────────────────────────────── -->
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue-picture-input"></script>
+
+    <!-- ──────────────────────────[VUE]────────────────────────────── -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+
+    <!-- ──────────────────────────[IZI MODAL]─────────────────────────────────────── -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/js/iziModal.js"></script>
+
+    <!-- ──────────────────────────[GOOGLE SIGNIN]────────────────────────────── -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+
+    <!-- ──────────────────────────[AOS]────────────────────────────── -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- ──────────────────────────[NAVBAR]────────────────────────────── -->
+    <script src="./js/components/navbar.js"></script>
+
+    <!-- ──────────────────────────[LISTPOST]────────────────────────────── -->
+    <script src="./js/components/list-post.js"></script>
+
+    <!-- ──────────────────────────[SEARCHPOST]────────────────────────────── -->
+    <script src="./js/components/searched-post.js"></script>
+
+    <!-- ──────────────────────────[ADD POST FORM]────────────────────────────── -->
+    <script src="./js/components/add-post-form.js"></script>
+
+    <!-- ──────────────────────────[MAIN SCRIPT]────────────────────────────── -->
+    <script src="script.js"></script>
+
+    <script>
+        AOS.init();
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+</body>
+
+>>>>>>> constructing client side
 </html>
