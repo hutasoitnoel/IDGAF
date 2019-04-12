@@ -1,12 +1,14 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const bcrypt = require('../helpers/bcrypt')
 
 let postSchema = new Schema({
     title: {
         type: String
     },
-    tags: [],
+    tags: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Tag'
+    }],
     post: {
         type: String
     } 
