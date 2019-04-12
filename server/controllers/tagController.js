@@ -1,5 +1,6 @@
 const TagModel = require('../models/tag')
 const vision = require('@google-cloud/vision');
+const PostModel = require('../models/post')
 
 // Creates a client
 const client = new vision.ImageAnnotatorClient({
@@ -27,6 +28,20 @@ module.exports = {
     } catch (err) {
       console.log(err, 'ininni====================')
     }
+  },
+
+  findTag(req, res) {
+    PostModel.find({})
+      .populate({
+        path: 'tags',
+      })
+      .then(posts => {
+        const searchResult = posts.filter(post => post.tags.find(tag => tag.tagName.toLowerCase() === req.query.q.toLowerCase()));
+        res.status(200).json(searchResult)
+      })
+      .catch(err => {
+        res.status(500).json(err)
+      })
   }
   // })
   // .catch(err => {

@@ -80,11 +80,28 @@
             v-if="position === 'searched-post'"
             :search-on-screen="searchOnScreen"
             :show-search="showSearch"
+            :found-post="found"
         >
         </searched-post> 
 
-        <add-post-form v-if="position === 'add-post'">
+        <add-post-form 
+            v-if="position === 'add-post'"
+            @added-post="sukses"
+        >
         </add-post-form>
+
+        <div 
+            v-if="position === 'null'"        
+        >
+            <div class="container mx-auto">
+                <h1>Not Gifing a F404</h1>
+                <img 
+                    src="https://media3.giphy.com/media/FlMl5E0mj7J8A/giphy.gif" 
+                    style="margin-left:15rem;"
+                    alt="">
+            </div>
+
+        </div>
 
     </div>
 

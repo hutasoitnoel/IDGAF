@@ -14,7 +14,7 @@ class Controller {
         res.status(500).json(err);
       })
   }
-  
+
   static find(req, res) {
     Post.findById(req.params.id)
       .populate('tags')
@@ -65,18 +65,26 @@ class Controller {
   }
 
   static create(req, res) {
+    console.log(req.fileUrl, '================')
+    let latest = null
     Post.create({
       title: req.body.title,
-      tags: req.body.selectedTags,
       post: req.fileUrl
     })
       .then(newPost => {
-        res.send(201).json(newPost);
+        latest = newPost
+        return Post.findByIdAndUpdate(newPost._id, {
+          $push: { tags: req.body.selectedTags }
+        })
+      })
+      .then(pushed => {
+        res.status(201).json(latest);
       })
       .catch(err => {
         console.log(err);
         res.status(500).json(err);
       })
+
   }
 
   static generateTags(req, res) {
