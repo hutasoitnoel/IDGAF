@@ -66,7 +66,16 @@ let app = new Vue({
 
     },
     created() {
-        this.position = 'list-post'
+        axios
+            .get('http://localhost:3000/posts')
+            .then(allpost => {
+
+                this.position = 'list-post'
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
     },
     methods: {
         move(position) {
