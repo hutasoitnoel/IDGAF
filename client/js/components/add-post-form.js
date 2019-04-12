@@ -9,67 +9,38 @@ Vue.component("add-post-form", {
             titleInput: '',
             tagInput: '',
             fileInput: '',
-            selectedTags: '',
-            exisTags: {},
+            selectedTags: [],
+            existTags: {},
             background: 'https://cdn.dribbble.com/users/122051/screenshots/5749053/dribbble_1.gif'
         }
     },
     methods: {
         onChange(image) {
-            //axios get tags from google vision
-            //return [tags]
-            // this.selectedTags = 
-            // console.log("masok file handler", this.$refs.file.files[0]);
-            // console.log(this.$refs.file)
-            // console.log(this.file, 'in===========')
-            // this.fileInput = this.$refs.file.files[0];
-
             this.fileInput = image
             const payload = {
-                image           
+                image
             }
-            console.log(payload.image)
-            axios.post('http://localhost:3000/upload', payload)
-            .then(function ({ data }) {
-                alert('Uploaded')
-                console.log(data)
-            })
-            .catch(function (err) {
-                console.log(err)
-                alert('Error, see console')
-                console.log(err.response.data)
-            })
+            axios.post('http://localhost:3000/tags', payload)
+                .then( ({ data }) => {
+                    let arr = []
+                    data.map(e => {
+                        console.log(e)
+                        arr.push(e.tagName)
+                    })
+                    this.selectedTags = arr
+                })
+                .catch(function (err) {
+                    console.log(err)
+                    alert('Error, see console')
+                    console.log(err.response.data)
+                })
 
+        },
+        addNewPost() {
+            console.log(this.titleInput)
+            
+        },
     },
-    addNewPost() {
-
-        //axios tembak server create post
-        // console.log("adding new post....", this.fileInput);
-        // let dataFormat = new FormData();
-        // dataFormat.append("title", this.titleInput);
-        // dataFormat.append("tag", this.selectedTags);
-        // dataFormat.append("image", this.fileInput);
-        // console.log(dataFormat, 'heheheheh=============')
-        // axios
-        //     .post("http://localhost:3000/posts", dataFormat, {
-        //         headers: {
-        //             token: localStorage.getItem("token"),
-        //             "Content-Type": "multipart/form-data"
-        //         }
-        //     })
-        //     .then(addedProduct => {
-        //         console.log("new Product Info: ", addedProduct);
-        //         this.$store.dispatch("notif", {
-        //             type: "success",
-        //             message: "New Product Added Successfully."
-        //         });
-        //         this.$router.push("/products");
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     });
-    },
-},
     template: `
     <div id="form-add" class="container kecil text-center">
         <form class="border-shark-form container px-5 py-3 bulet text-center" @submit.prevent="addNewPost">
@@ -108,8 +79,11 @@ Vue.component("add-post-form", {
                     </div>
                 </div>
                 <div class="form-group col-6">
-                    <tags-input element-id="tags" v-model="selectedTags" :existing-tags="exisTags"
-                    :typeahead="true">
+                    <tags-input     
+                        element-id="tags" 
+                        v-model="selectedTags" 
+                        :existing-tags="existTags"
+                        :typeahead="true">
                     </tags-input>
                 </div>
                 <div class="form-group col">

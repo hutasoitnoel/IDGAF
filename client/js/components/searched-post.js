@@ -4,7 +4,7 @@ Vue.component("searched-post",{
     <div class="container">
         <div class="row">
             <div class="mx-auto">
-                <h4 class="text-light mb-5 mt-2" v-if="showSearch">{{ searchOnScreen }}</h4>
+                <h4 class="text-dark mb-5 mt-2" v-if="showSearch">{{ searchOnScreen }}</h4>
             </div>
         </div>
         <div class="grid">
