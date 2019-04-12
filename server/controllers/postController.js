@@ -1,5 +1,5 @@
 const Post = require('../models/post');
-const upload = require('../helpers/googleUpload');
+// const upload = require('../helpers/googleUpload');
 
 
 class Controller {
