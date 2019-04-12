@@ -10,8 +10,10 @@ mongoose.set("useFindAndModify", false)
 
 mongoose.connect(`mongodb://localhost/idgaf`, { useNewUrlParser: true })
 
-app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
+// app.use(express.urlencoded({ extended: false }))
+// app.use(express.json())
+app.use(express.urlencoded({ limit: '50mb', extended: false }));
+app.use(express.json({ limit: '50mb' }));
 app.use(cors())
 
 const userRoutes = require('./routes/user')
