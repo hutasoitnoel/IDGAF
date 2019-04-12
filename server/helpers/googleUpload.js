@@ -38,6 +38,7 @@ const sendUploadToGCS = (req, res, next) => {
     req.file.cloudStorageObject = gcsname
     file.makePublic().then(() => {
       req.file.cloudStoragePublicUrl = getPublicUrl(gcsname);
+      console.log(req.file.cloudStoragePublicUrl, '<<<<<<<<<ini')
       next()
     })
   })
@@ -54,7 +55,7 @@ const Multer = require('multer'),
         // dest: '../images'
       })
 
-console.log(Multer.memoryStorage.toString());
+// console.log(Multer.memoryStorage.toString());
 
 module.exports = {
   getPublicUrl,

@@ -1,24 +1,37 @@
 const TagModel = require('../models/tag')
 
+const vision = require('@google-cloud/vision');
+
+// Creates a client
+const client = new vision.ImageAnnotatorClient({
+  keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
+});
+
+// console.log(vision)
+
 module.exports = {
 
-  async create(req, res, next) {
-    try {
-      let { tagName } = req.body
-      let promiseArr = []
-  
-      tagName.forEach(name => {
-        promiseArr.push(TagModel.create({tagName: name}))
+  create(req, res, next) {
+    // console.log(req.file)
+    client
+      .labelDetection(req.file.cloudStoragePublicUrl)
+      .then(results => {
+        const labels = results[0].labelAnnotations;
+        let tagPromiseAll = []
+        labels.forEach(name => {
+          tagPromiseAll.push(TagModel.create({tagName: name.description}))
+        })
+
+        return Promise.all(tagPromiseAll)
       })
-  
-      let tags = await Promise.all(promiseArr)
-      req.file.tags = tags
-      // res.status(201).json(tags)
-      next()
-    } catch(err) {
-      // res.status(500).json(err)
-      next()
-    }
+      .then(tags => {
+        console.log(tags)
+        res.status(201).json(tags)
+      })
+      .catch(err => {
+        console.error('ERROR:', err);
+        res.status(500).json(err)
+      })
   },
 
   // findTag(req, res) {
