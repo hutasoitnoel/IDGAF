@@ -5,6 +5,7 @@ const Post = require('../models/post');
 class Controller {
   static findAll(req, res) {
     Post.find({})
+      .populate('tags')
       .then(posts => {
         res.status(200).json(posts)
       })
@@ -16,6 +17,7 @@ class Controller {
   
   static find(req, res) {
     Post.findById(req.params.id)
+      .populate('tags')
       .then(post => {
         if (!post) {
           res.status(404).json({ message: 'not found' })
@@ -65,8 +67,8 @@ class Controller {
   static create(req, res) {
     Post.create({
       title: req.body.title,
-      tags: req.body.tags,
-      post: req.body.url
+      tags: req.body.selectedTags,
+      post: req.fileUrl
     })
       .then(newPost => {
         res.send(201).json(newPost);
