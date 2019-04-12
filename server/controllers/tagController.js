@@ -1,4 +1,5 @@
 const TagModel = require('../models/tag')
+const PostModel = require('../models/post')
 const vision = require('@google-cloud/vision');
 const PostModel = require('../models/post')
 
@@ -6,8 +7,6 @@ const PostModel = require('../models/post')
 const client = new vision.ImageAnnotatorClient({
   keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
 });
-
-// console.log(vision)
 
 module.exports = {
 
@@ -30,6 +29,13 @@ module.exports = {
     }
   },
 
+  // })
+  // .catch(err => {
+  // console.error('ERROR:', err);
+  // res.status(500).json(err)
+  // })
+  // },
+
   findTag(req, res) {
     PostModel.find({})
       .populate({
@@ -43,24 +49,5 @@ module.exports = {
         res.status(500).json(err)
       })
   }
-  // })
-  // .catch(err => {
-  // console.error('ERROR:', err);
-  // res.status(500).json(err)
-  // })
-  // },
 
-  // findTag(req, res) {
-  //   // console.log(req.query.q)
-  //   if (req.query.q) {
-  //     TagModel
-  //       .find({
-  //         tagName: req.query.q
-  //       })
-  //       .then()
-
-  //   } else {
-  //     console.log('masuk else')
-  //   }
-  // }
 }

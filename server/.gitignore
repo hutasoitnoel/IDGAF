@@ -2,4 +2,3 @@ node_modules
 .env
 keyfile.json
 APIKEY.json
-keyfile.json
