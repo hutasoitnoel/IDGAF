@@ -11,7 +11,9 @@ Vue.component("add-post-form", {
             fileInput: '',
             selectedTags: [],
             existTags: {},
-            background: 'https://cdn.dribbble.com/users/122051/screenshots/5749053/dribbble_1.gif'
+            background: 'https://cdn.dribbble.com/users/122051/screenshots/5749053/dribbble_1.gif',
+            tagId: [],
+            tagInfo: []
         }
     },
     methods: {
@@ -21,12 +23,18 @@ Vue.component("add-post-form", {
                 image
             }
             axios.post('http://localhost:3000/tags', payload)
-                .then( ({ data }) => {
+                .then(({ data }) => {
                     let arr = []
                     data.map(e => {
                         console.log(e)
+                        this.tagId.push(e._id)
                         arr.push(e.tagName)
+                        this.tagInfo.push(e)
                     })
+                    // tagsId = tagsId.filter(tag => 
+                    //     selectedTags.find(selected => 
+                    //       selected === tag.tagname
+                    //   ))
                     this.selectedTags = arr
                 })
                 .catch(function (err) {
@@ -34,11 +42,35 @@ Vue.component("add-post-form", {
                     alert('Error, see console')
                     console.log(err.response.data)
                 })
-
         },
+        onTagRemoved(slug) {
+            console.log(`Tag removed: ${slug}=======================`);
+        },
+
+
         addNewPost() {
             console.log(this.titleInput)
-            
+            console.log(this.tagId)
+
+            this.tagInfo = this.tagInfo.filter(tag =>
+                this.selectedTags.find(selected =>
+                    selected === tag.tagName
+                ))
+                    console.log(this.tagInfo);
+                    
+            axios.post('http://localhost:3000/posts', {
+                image: this.fileInput,
+                title: this.titleInput,
+                selectedTags: this.tagInfo
+            })
+                .then(addedPost => {
+                    this.$emit('added-post')
+                    console.log(addedPost)
+                    console.log('=============sdiufhasdoifosdhfoa================')
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         },
     },
     template: `
@@ -84,6 +116,7 @@ Vue.component("add-post-form", {
                         v-model="selectedTags" 
                         :existing-tags="existTags"
                         :typeahead="true">
+                        @tag-removed="onTagRemoved"
                     </tags-input>
                 </div>
                 <div class="form-group col">
@@ -92,6 +125,8 @@ Vue.component("add-post-form", {
                 </div>
             </div>
         </form>
+
+        
     </div>
     `
 })

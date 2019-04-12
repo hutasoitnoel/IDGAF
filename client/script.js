@@ -61,6 +61,7 @@ let app = new Vue({
         searchOnScreen: '',
         showSearch: false,
         searchOnScreen: '',
+        found: []
     },
     computed: {
 
@@ -95,11 +96,24 @@ let app = new Vue({
                             result += `#${e.toLowerCase()}`
                         }
                     }
+                    
+                    this.searchOnScreen = result
+                    axios.get(`http://localhost:3000/tags?q=${this.searchOnScreen.slice(1)}`)
+                        .then(({ data }) => {
+                            this.found = data
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                    this.position = "searched-post"
+                    this.showSearch = true
                 })
-                this.searchOnScreen = result
-                this.position = "searched-post"
-                this.showSearch = true
+
             }
         },
+        sukses() {
+            this.position = 'list-post'
+            alert('success', 'added new post')
+        }
     }
 });

@@ -65,6 +65,7 @@ const uploads = (req, res, next) => {
   const newFile = 'uploads/' + newFilename;
   req.fileName = newFilename
   req.filePath = newFile
+  console.log('masok uploads========================================', newFile)
   // console.log(newFile, 'NAMA FILE YANG DI UPLOADS FOLDER')
   fs.writeFile(newFile, base64Data, 'base64', function (err) {
       if (err) {
@@ -76,11 +77,11 @@ const uploads = (req, res, next) => {
   });
 }
 
-const goToGCS = (req, res) => {
+const goToGCS = (req, res, next) => {
   //-
   // Upload a file from a local path.
   //-
-  bucket.upload(req.filePath, function(err, file, apiResponse, next) {
+  bucket.upload(req.filePath, function(err, file, apiResponse) {
     // Your bucket now contains:
     // - "image.png" (with the contents of `/local/path/image.png')
   
@@ -91,6 +92,8 @@ const goToGCS = (req, res) => {
     // console.log('API ============')
     // console.log(apiResponse);
     req.fileUrl = getPublicUrl(req.fileName);
+    console.log('masokkkkkkkkkkkkkkkkkkkkkkkk==============', req.fileUrl);
+    
     // Assuming that 'path/file.txt' is a regular file.
     fs.unlink(req.filePath, (err) => {
       if (err) throw err;

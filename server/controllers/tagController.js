@@ -1,6 +1,7 @@
 const TagModel = require('../models/tag')
 const PostModel = require('../models/post')
 const vision = require('@google-cloud/vision');
+const PostModel = require('../models/post')
 
 // Creates a client
 const client = new vision.ImageAnnotatorClient({
@@ -27,6 +28,7 @@ module.exports = {
       console.log(err, 'ininni====================')
     }
   },
+
   // })
   // .catch(err => {
   // console.error('ERROR:', err);
