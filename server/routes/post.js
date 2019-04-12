@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const postController = require("../controllers/postController");
+const tagController = require('../controllers/tagController')
 const upload = require('../helpers/googleUpload');
 
 //get all posts data
@@ -18,7 +19,7 @@ const upload = require('../helpers/googleUpload');
 router.post("/", postController.create);
 
 //generate tags
-router.post("/tags", upload.multer('image'), upload.sendUploadToGCS, /** generateTokenMiddleWare*/ postController.generateTags);
+// router.post("/tags", upload.multer.single('image'), upload.sendUploadToGCS, /*tagController.create, postController.generateTags*/ );
 
 
 module.exports = router;
