@@ -1,4 +1,5 @@
 const TagModel = require('../models/tag')
+const PostModel = require('../models/post')
 const vision = require('@google-cloud/vision');
 
 // Creates a client
@@ -25,7 +26,7 @@ module.exports = {
     } catch (err) {
       console.log(err, 'ininni====================')
     }
-  }
+  },
   // })
   // .catch(err => {
   // console.error('ERROR:', err);
@@ -33,17 +34,17 @@ module.exports = {
   // })
   // },
 
-  // findTag(req, res) {
-  //   // console.log(req.query.q)
-  //   if (req.query.q) {
-  //     TagModel
-  //       .find({
-  //         tagName: req.query.q
-  //       })
-  //       .then()
-
-  //   } else {
-  //     console.log('masuk else')
-  //   }
-  // }
+  findTag(req, res) {
+    PostModel.find({})
+      .populate({
+        path: 'tags',
+      })
+      .then(posts => {
+        const searchResult = posts.filter(post => post.tags.find(tag => tag.tagName.toLowerCase() === req.query.q.toLowerCase()));
+        res.status(200).json(searchResult)
+      })
+      .catch(err => {
+        res.status(500).json(err)
+      })
+  }
 }

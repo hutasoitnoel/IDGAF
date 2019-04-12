@@ -4,6 +4,6 @@ const createFilePath = require('../middlewares/createFilePath')
 
 //create new tag
 router.post("/", createFilePath, tagController.create);
-// router.get("/", tagController.findTag)
+router.get("/", tagController.findTag)
 
 module.exports = router;
