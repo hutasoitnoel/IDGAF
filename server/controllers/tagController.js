@@ -6,10 +6,12 @@ const client = new vision.ImageAnnotatorClient({
   keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
 });
 
+// console.log(vision)
+
 module.exports = {
-  
+
   create(req, res, next) {
-    console.log(req.file);
+    // console.log(req.file)
     client
       .labelDetection(req.file.cloudStoragePublicUrl)
       .then(results => {
@@ -31,6 +33,7 @@ module.exports = {
         console.error('ERROR:', err);
         // res.status(500).json(err)
         next();
+
       })
   },
 

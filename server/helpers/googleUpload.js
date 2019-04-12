@@ -57,7 +57,6 @@ const Multer = require('multer'),
         // dest: '../images'
       })
 
-
 const uploads = (req, res, next) => {
   const { image } = req.body;
   const base64Data = image.replace(/^data:image\/png;base64,|^data:image\/gif;base64,/, "");
