@@ -1,4 +1,5 @@
 const User = require('../models/user')
+const Post = require('../models/post')
 const bcrypt = require('../helpers/bcrypt')
 const jwt = require('jsonwebtoken')
 
@@ -148,4 +149,23 @@ module.exports = {
                 }
             })
     },
+
+    addFavoritePost(req, res) {
+        Post
+            .findById(req.params.postId)
+            .then(post => {
+                return User
+                    .findOneAndUpdate(
+                        {email: req.body.email}, 
+                        {$push: {favoritePost: post}}
+                    )
+                    
+            })
+            .then(user => {
+                res.status(201).json(user)
+            })
+            .catch(err => {
+                res.status(500).json(err)
+            })
+    }
 }

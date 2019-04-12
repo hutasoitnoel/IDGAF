@@ -35,7 +35,11 @@ let userSchema = new Schema({
 
             }
         ]
-    }
+    },
+    favoritePost: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Post'
+    }]
 })
 
 userSchema.pre('save', function (next) {
