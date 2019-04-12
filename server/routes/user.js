@@ -19,4 +19,6 @@ router.post("/", userController.create);
 //login a user
 router.post("/login", userController.login);
 
+router.post('/addFavoritePost/:postId', userController.addFavoritePost)
+
 module.exports = router;
